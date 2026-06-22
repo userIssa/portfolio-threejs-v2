@@ -120,10 +120,30 @@ export default function TerminalCLI({ onHackTrigger }: { onHackTrigger: () => vo
             TOKYO GATEWAY OVERLOADED... INITIATING KATAKANA BYPASS SEQUENCE.
           </div>
         );
+        
+        fetch("/api/hack-alert", { method: "POST" })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success) {
+              setHistory((prev) => [
+                ...prev,
+                {
+                  command: "system_status",
+                  output: (
+                    <div className="text-cyber-pink font-semibold text-[10px] mt-1 animate-pulse">
+                      CONNECTION ESTABLISHED: {data.ip} ({data.os}) // SECURE DOSSIER EXTRACTED
+                    </div>
+                  ),
+                },
+              ]);
+            }
+          })
+          .catch((err) => console.error("Bypass log error:", err));
+
         setTimeout(() => {
           onHackTrigger();
           setIsOpen(false);
-        }, 1200);
+        }, 2200);
         break;
 
       case "clear":
