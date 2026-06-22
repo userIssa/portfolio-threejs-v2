@@ -75,8 +75,7 @@ export default function MatrixOverlay({ onComplete }: { onComplete: () => void }
         <div className="z-10 p-6 sm:p-10 glassmorphism border-cyber-pink/45 rounded-2xl flex flex-col items-center justify-center text-center gap-4 animate-fade-in shadow-neon-pink bg-[#08090f]/90 max-w-md mx-6">
           <div className="w-12 h-12 rounded-full border border-cyber-pink/40 flex items-center justify-center bg-cyber-pink/10 text-cyber-pink animate-ping" />
           <div className="text-2xl font-bold text-cyber-pink text-neon-glow-pink uppercase tracking-widest mt-2 animate-pulse">
-            SYSTEM BYPASS GRANTED
-            HI JOSHUA!!!! 😈😈
+            SYSTEM BYPASS GRANTED 
           </div>
           <div className="text-[10px] text-white/70 leading-relaxed max-w-xs mt-1">
             Root override access confirmed. Secure dossiers extracted. Re-launching Neo-Tokyo network loops.
