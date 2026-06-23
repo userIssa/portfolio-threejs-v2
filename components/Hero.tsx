@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Terminal, Shield, ArrowRight, Cpu, FolderGit, FileJson, Play } from "lucide-react";
 import dynamic from "next/dynamic";
 
-const DragonHero = dynamic(() => import("./DragonHero"), {
+const SwordHero = dynamic(() => import("./SwordHero"), {
   ssr: false,
 });
 
@@ -112,9 +112,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Interactive 3D Wireframe Dragon */}
+        {/* Interactive 3D Wireframe Sword */}
         <div className="lg:col-span-6 w-full h-[350px] sm:h-[450px] lg:h-[500px] relative">
-          <DragonHero />
+          <SwordHero />
         </div>
       </div>
     </section>
