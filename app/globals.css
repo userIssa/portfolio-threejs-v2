@@ -104,3 +104,11 @@
   background-size: 100% 3px, 3px 100%;
   pointer-events: none;
 }
+
+/* Scribble hover draw animation */
+@keyframes drawScribble {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+

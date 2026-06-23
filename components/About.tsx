@@ -14,32 +14,32 @@ interface CardItem {
 
 const CARDS_DATA: CardItem[] = [
   {
-    title: "Web Developer",
+    title: "Software Engineer",
     icon: Layers,
     color: "#00f0ff", // Tokyo Cyan
     glowClass: "group-hover:shadow-neon-cyan/40",
-    description: "Developing performant, responsive web apps using React, Next.js, and modern styling libraries.",
+    description: "Contractor at Genesis Group Nigeria. Building complaint systems (GenHears), shopper programs (Inner Circle), and assessment portals.",
   },
   {
-    title: "React Native Developer",
+    title: "GDSC Security Lead",
     icon: Smartphone,
     color: "#8b5cf6", // Purple
     glowClass: "group-hover:shadow-neon-purple/40",
-    description: "Building cross-platform mobile apps with native UI modules, responsive charts, and fluid user flows.",
+    description: "Lead security representative for Google Developer Student Clubs. Directing CTFs, security tutorials, and ethical hacking workshops.",
   },
   {
-    title: "Backend Engineer",
+    title: "Backend & Systems",
     icon: Database,
     color: "#10b981", // Green
     glowClass: "group-hover:shadow-neon-green/40",
-    description: "Engineering secure APIs, robust microservices, database structures, and deploying clusters via Docker.",
+    description: "Designing secure REST APIs, role-based access controls, MongoDB/PostgreSQL schemas, and OpenAI sentiment integrations.",
   },
   {
     title: "Ethical Hacker",
     icon: ShieldCheck,
     color: "#ff2a85", // Neon Sakura Pink
     glowClass: "group-hover:shadow-neon-pink/40",
-    description: "Analyzing network packets, auditing API security, pentesting servers, and tracing binaries.",
+    description: "CEH and MCRTA certified red team analyst. Auditing web endpoints, conducting server pentests, and testing low-level systems.",
   },
 ];
 
@@ -129,13 +129,13 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           <div className="text-left flex flex-col gap-4 text-slate-300 text-sm leading-relaxed font-sans max-w-xl">
             <p>
-              I am a cyber-security specialist and full stack web engineer focused on secure architecture models, active penetration testing, and clean software abstractions.
+              I am a Software Engineering graduate currently working as a Software Engineer (contract) at Genesis Group Nigeria's Innovations Department in Port Harcourt. I build secure internal tools, customer-facing platforms, and security-oriented systems — then write about the ones that matter.
             </p>
             <p>
-              My background integrates technical vulnerability assessments with modern application development. Whether auditing database endpoints, constructing high-fidelity mobile apps in React Native, or setting up secure proxy routers, I emphasize high-performance solutions and defensive security standards.
+              I hold Certified Ethical Hacker (CEH) and Certified Red Team Analyst (MCRTA) certifications and am actively pursuing an MSc in Cybersecurity. I care about tools that solve real problems, code that holds up under pressure, and security that doesn't get bolted on as an afterthought.
             </p>
             <p className="font-mono text-xs text-cyber-pink">
-              // ACTIVE CORE PROTOCOLS: node.js | next.js | react | python | reverse_engineering | metasploit
+              // ACTIVE CORE PROTOCOLS: next.js | node.js | python | c99 | mongodb | postgresql | metasploit | ceh | mcrta
             </p>
           </div>
 

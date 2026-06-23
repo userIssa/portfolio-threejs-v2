@@ -14,32 +14,45 @@ interface WorkEvent {
 
 const EXPERIENCE_DATA: WorkEvent[] = [
   {
-    role: "Cyber Security Lead",
-    company: "Google Developer Student Clubs (GDSC)",
-    period: "Sept 2023 - Present",
-    icon: Shield,
-    color: "#ff007f", // Pink
+    role: "Software Engineer",
+    company: "Genesis Group Nigeria — Innovations Department",
+    period: "Jan 2026 - Present",
+    icon: Terminal,
+    color: "#ff2a85", // Neon Sakura Pink
+    points: [
+      "Built GenHears: a full-stack complaint & customer satisfaction management system (Next.js, MongoDB, Tailwind) with RBAC, NPS tracking, sentiment analysis via OpenAI, and CSV export.",
+      "Scoped and spec'd Inner Circle: a secret shopper programme platform with role-based assignment flows, points/milestone rewards, and per-business-unit survey templates.",
+      "Initiated Candidate Assessment Portal to replace Google Forms Talent & Assessment workflows.",
+      "Produced QSR Q2 strategy decks and QHSE adoption materials for executive-level internal distribution.",
+    ],
+    tags: ["Next.js", "MongoDB", "Tailwind CSS", "OpenAI API", "RBAC", "System Scoping", "Strategy Decks"],
+  },
+  {
+    role: "GDSC Cyber Security Lead",
+    company: "Babcock University Chapter",
+    period: "Sept 2023 - Aug 2024",
+    icon: Award,
+    color: "#d9b885", // Warm Gold
     points: [
       "Designed and presented structured cyber-security workshops covering SQL Injections, Cross-Site Scripting, and OWASP Top 10 vulnerabilities.",
       "Organized CTF (Capture The Flag) competitions and hacking games for university developers to practice penetration testing.",
       "Mentored student members on binary reverse-engineering basics (using Ghidra/IDA Pro) and secure API development protocols.",
-      "Conducted vulnerability assessments on local network pathways and verified security posture using Metasploit and Nmap.",
     ],
-    tags: ["OWASP", "Metasploit", "Penetration Testing", "Reverse Engineering", "Wireshark", "CTF Host"],
+    tags: ["OWASP Top 10", "CTF Hosting", "Ghidra", "IDA Pro", "Penetration Testing", "Security Mentorship"],
   },
   {
-    role: "Full Stack Developer Intern",
-    company: "Nigeria LNG Limited (NLNG)",
+    role: "Cybersecurity Intern",
+    company: "NLNG (Nigeria LNG Limited)",
     period: "Feb 2023 - Aug 2023",
-    icon: Terminal,
-    color: "#00e5ff", // Cyan
+    icon: Shield,
+    color: "#00e5ff", // Tokyo Cyan
     points: [
-      "Engineered full-stack features for internal company web portals using React.js and Node.js microservices.",
-      "Optimized query performance for relational PostgreSQL database layers, reducing dashboard loading lag by 35%.",
       "Audited company portal authentication schemas, implementing JSON Web Tokens (JWT) and securing Express route endpoints.",
+      "Optimized query performance for relational PostgreSQL database layers, reducing dashboard loading lag by 35%.",
+      "Conducted vulnerability assessments and emulated threat pathways across local development network layouts.",
       "Collaborated with dev teams to containerize application components using Docker, accelerating local testing and production builds.",
     ],
-    tags: ["React.js", "Node.js", "Express", "PostgreSQL", "JWT Auth", "Docker", "Git"],
+    tags: ["JWT Auth", "PostgreSQL", "Express API", "Docker", "Vulnerability Assessment", "Threat Emulation"],
   },
 ];
 

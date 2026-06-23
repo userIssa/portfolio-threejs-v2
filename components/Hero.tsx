@@ -4,11 +4,16 @@ import { useEffect, useState } from "react";
 import { Terminal, Shield, ArrowRight, Cpu, FolderGit, FileJson, Play } from "lucide-react";
 import dynamic from "next/dynamic";
 
-const ComputersCanvas = dynamic(() => import("./canvas/Computers"), {
+const DragonHero = dynamic(() => import("./DragonHero"), {
   ssr: false,
 });
 
-const TYPING_WORDS = ["Software Engineer", "Ethical Hacker", "Human Being"];
+const TYPING_WORDS = [
+  "I build systems. Then I break them.",
+  "Software Engineer. Ethical Hacker. Both on purpose.",
+  "Full-stack dev by day. Penetration tester by design.",
+  "Software Engineer", "Ethical Hacker", "Human Being"
+];
 
 export default function Hero() {
   const [typedText, setTypedText] = useState("");
@@ -58,8 +63,10 @@ export default function Hero() {
       
       {/* Elegant Cyber Red Sun Backdrop */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] sm:w-[500px] sm:h-[500px] rounded-full bg-cyber-red/5 blur-[90px] pointer-events-none -z-10" />
-      <div className="absolute top-[20%] right-[10%] opacity-5 text-[150px] font-bold text-white tracking-widest leading-none pointer-events-none select-none font-mono">
-        東京
+      <div className="absolute top-[20%] right-[10%] opacity-5 text-[150px] font-bold text-white tracking-widest leading-none pointer-events-none select-none font-mono text-right">
+        ポートハーコート、
+        <br />
+        ナイジェリア
       </div>
 
       <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-10 text-left">
@@ -77,14 +84,14 @@ export default function Hero() {
             </span>
           </h1>
 
-          <div className="text-xl sm:text-2xl font-mono font-semibold h-10 flex items-center text-cyber-cyan text-neon-glow-cyan">
+          <div className="text-xl sm:text-2xl font-mono font-semibold min-h-[2.5rem] py-1 flex items-center text-cyber-cyan text-neon-glow-cyan">
             <span>
-              I'm a <span className="text-white border-r-2 border-cyber-pink pr-1 animate-blink">{typedText}</span>
+              <span className="text-white border-r-2 border-cyber-pink pr-1 animate-blink">{typedText}</span>
             </span>
           </div>
 
           <p className="text-sm sm:text-base text-slate-300 max-w-xl font-sans leading-relaxed">
-            Specializing in secure web ecosystems, robust backend microservices, and network exploit assessments. I build performant digital architectures and test security boundaries.
+            BSc Software Engineering graduate and cybersecurity specialist. Specializing in secure web ecosystems, robust backend microservices, and network exploit assessments. I build performant digital architectures and test security boundaries.
           </p>
 
           <div className="flex flex-wrap gap-4 mt-4">
@@ -105,9 +112,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Interactive 3D Computers Canvas */}
+        {/* Interactive 3D Wireframe Dragon */}
         <div className="lg:col-span-6 w-full h-[350px] sm:h-[450px] lg:h-[500px] relative">
-          <ComputersCanvas />
+          <DragonHero />
         </div>
       </div>
     </section>

@@ -3,10 +3,34 @@
 import { useState, useEffect } from "react";
 import { Terminal, Shield, Menu, X } from "lucide-react";
 
+// Custom SVG path representing a loose hand-drawn double loop scribble
+function HoverScribble() {
+  return (
+    <svg
+      className="absolute inset-0 w-[125%] h-[160%] -left-[12.5%] -top-[30%] pointer-events-none z-0 select-none"
+      viewBox="0 0 100 40"
+      fill="none"
+      preserveAspectRatio="none"
+    >
+      <path
+        d="M 5 20 C 5 5, 95 5, 95 20 C 95 35, 5 35, 5 22 C 5 12, 85 8, 92 18 C 95 24, 75 32, 50 32"
+        stroke="#ff2a6d" // theme's cyber-pink
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeDasharray="300"
+        strokeDashoffset="300"
+        className="animate-[drawScribble_0.5s_ease-out_forwards]"
+      />
+    </svg>
+  );
+}
+
 export default function Navbar() {
   const [activeSec, setActiveSec] = useState("home");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hoveredItemId, setHoveredItemId] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,13 +103,18 @@ export default function Navbar() {
             <button
               key={item.id}
               onClick={() => handleScrollTo(item.id)}
-              className={`font-mono text-[10px] font-semibold tracking-widest relative py-1 transition-colors ${
+              onMouseEnter={() => setHoveredItemId(item.id)}
+              onMouseLeave={() => setHoveredItemId(null)}
+              className={`font-mono text-[10px] font-semibold tracking-widest relative py-2 transition-colors ${
                 activeSec === item.id ? "text-cyber-pink text-neon-glow-pink" : "text-white/60 hover:text-white"
               }`}
             >
-              {item.label}
+              <span className="relative z-10 px-2 py-1 inline-block">
+                {item.label}
+                {hoveredItemId === item.id && <HoverScribble />}
+              </span>
               {activeSec === item.id && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyber-pink animate-pulse rounded-full shadow-neon-pink" />
+                <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-cyber-pink animate-pulse rounded-full shadow-neon-pink" />
               )}
             </button>
           ))}
@@ -115,11 +144,16 @@ export default function Navbar() {
               <button
                 key={item.id}
                 onClick={() => handleScrollTo(item.id)}
-                className={`py-2 border-b border-white/5 transition-all text-left ${
+                onMouseEnter={() => setHoveredItemId(item.id)}
+                onMouseLeave={() => setHoveredItemId(null)}
+                className={`py-2 border-b border-white/5 transition-all text-left relative ${
                   activeSec === item.id ? "text-cyber-pink pl-2" : "text-white/60 hover:text-white"
                 }`}
               >
-                {item.label}
+                <span className="relative z-10 px-2 py-1 inline-block">
+                  {item.label}
+                  {hoveredItemId === item.id && <HoverScribble />}
+                </span>
               </button>
             ))}
           </nav>

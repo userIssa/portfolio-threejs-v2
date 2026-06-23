@@ -15,47 +15,52 @@ interface ProjectItem {
 
 const PROJECTS_DATA: ProjectItem[] = [
   {
-    title: "Food Ordering & Tracking App",
-    category: "development",
-    description: "A React Native smartphone application featuring a responsive menu catalog, shopping cart pipelines, secure checkout nodes, and real-time shipment/delivery coordinates via Google Maps integration.",
-    tech: ["React Native", "Expo", "Redux", "Node.js", "Google Maps API"],
-    githubUrl: "https://github.com/toluwanimi-oderinde",
-    liveUrl: "https://github.com/toluwanimi-oderinde",
-    color: "#804dee", // Purple
-  },
-  {
-    title: "Cyber Security Vuln Scanner",
+    title: "SentinelWatch",
     category: "security",
-    description: "An automated security scanner written in Python and C++ that probes target hosts for open ports, resolves service banners, analyzes headers, and compares findings against local vulnerability databases.",
-    tech: ["Python", "C++", "Sockets API", "Nmap engine", "Multithreading"],
-    githubUrl: "https://github.com/toluwanimi-oderinde",
+    description: "AI-powered CCTV security monitor for small businesses with local inference (no cloud dependency), targeting existing CCTV hardware and pushing alerts via ntfy.sh.",
+    tech: ["Python", "FastAPI", "Ollama", "Moondream2", "Electron", "React", "ntfy.sh"],
+    githubUrl: "https://github.com/userIssa",
     color: "#ff007f", // Pink
   },
   {
-    title: "Meme4U Portal",
-    category: "development",
-    description: "Interactive meme creator and social hub. Enables visitors to choose templated layers, load custom images, write styled text overlays, and share assets with custom API routing and image storage.",
-    tech: ["React.js", "Tailwind CSS", "Express", "Node.js", "MongoDB"],
-    githubUrl: "https://github.com/toluwanimi-oderinde",
-    liveUrl: "https://github.com/toluwanimi-oderinde",
+    title: "Shroud",
+    category: "security",
+    description: "Geo-aware secure browser with hybrid Tor/residential proxy routing and fingerprint spoofing. Built with a D3 world map for interactive geo-routing visualization.",
+    tech: ["Electron", "React", "D3-geo", "Tor proxy", "Fingerprint Spoofing"],
+    githubUrl: "https://github.com/userIssa/shroud",
     color: "#00e5ff", // Cyan
   },
   {
-    title: "AsiLeave Staff Portal",
-    category: "development",
-    description: "Enterprise administrative portal for leave authorization workflows. Implements role-based access tokens, calendar logs, and email notifications to streamline workplace request cycles.",
-    tech: ["Next.js", "PostgreSQL", "Prisma ORM", "Tailwind CSS", "JWT Auth"],
-    githubUrl: "https://github.com/toluwanimi-oderinde",
+    title: "ShellForge",
+    category: "security",
+    description: "Constraint-aware shellcode generator with 51/51 validation tests passing across x86-64, x86-32, ARM Thumb, and MIPS BE architectures. Serviced via a clean REST API interface.",
+    tech: ["C99", "Python", "Flask", "GPT-4o-mini", "Assembly (x86/ARM)"],
+    githubUrl: "https://github.com/userIssa/shellforge",
+    color: "#e5a93c", // Gold
+  },
+  {
+    title: "HeapSentinel",
+    category: "security",
+    description: "Low-level heap memory integrity monitor that monitors allocations, tracks pointers, and defends against common heap overflows, double frees, and memory corruption exploits.",
+    tech: ["C", "Python", "Pointers Audit", "GDB scripting", "Memory Protection"],
+    githubUrl: "https://github.com/userIssa/heapsentinel",
     color: "#00ff66", // Green
   },
   {
-    title: "StegoWeb Steganography Tool",
+    title: "Arachne",
     category: "security",
-    description: "Web tool for hiding encrypted text inside image pixel matrices using Least Significant Bit (LSB) steganography, with client-side canvas extraction processes and custom passwords.",
-    tech: ["HTML5 Canvas", "Vanilla JavaScript", "AES Encryption", "CSS Glassmorphism"],
-    githubUrl: "https://github.com/toluwanimi-oderinde",
-    liveUrl: "https://github.com/toluwanimi-oderinde",
-    color: "#e5a93c", // Gold
+    description: "A custom security crawling and spidering framework designed to map server directories, inspect web endpoints, and identify vulnerable input vectors.",
+    tech: ["Python", "Spidering", "HTTP Auditing", "Payload Injections"],
+    githubUrl: "https://github.com/userIssa/arachne",
+    color: "#ff2a6d", // Cyber Pink
+  },
+  {
+    title: "Ask HR",
+    category: "development",
+    description: "Retrieval-Augmented Generation (RAG) assistant for human resource operations. Employs vector embeddings for verbatim document chunk retrieval and secured via JWT handshakes.",
+    tech: ["Next.js", "OpenAI API", "Vector Embeddings", "JWT Authentication", "RAG Pipeline"],
+    githubUrl: "https://github.com/userIssa",
+    color: "#00e5ff", // Cyan
   },
 ];
 

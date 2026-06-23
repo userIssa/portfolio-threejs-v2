@@ -56,7 +56,7 @@ export default function Contact() {
         {/* Section Heading */}
         <div className="flex flex-col gap-3 text-left">
           <div className="text-xs font-mono tracking-widest text-cyber-pink font-bold">
-            05 // COMMS_UPLINK_CHANNEL // 連絡
+            06 // COMMS_UPLINK_CHANNEL // 連絡
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-sans tracking-tight">
             Establish Secure Uplink

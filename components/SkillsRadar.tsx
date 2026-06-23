@@ -20,17 +20,17 @@ const SKILL_DATA: SkillCategory[] = [
     icon: Terminal,
     color: "#ff2a85", // Neon Sakura Pink
     glowClass: "shadow-neon-pink",
-    description: "Vulnerability analysis, active threat emulation, and system exploit validation.",
-    subskills: ["Metasploit", "Nmap", "Burp Suite", "Web App Pentesting", "Social Engineering"],
+    description: "Vulnerability analysis, active threat emulation, CEH auditing, and red team exploit validation.",
+    subskills: ["Metasploit", "Burp Suite", "Nmap Scanner", "CEH Audit Standards", "MCRTA Red Teaming", "OWASP Top 10"],
   },
   {
     name: "Reverse Engineering",
-    value: 85,
+    value: 82,
     icon: Key,
     color: "#ff003c", // Cyber Red
     glowClass: "shadow-neon-red",
-    description: "Decompiling, binary analysis, and disassembling firmware and executable layers.",
-    subskills: ["Ghidra", "IDA Pro", "x64dbg", "ELF & PE Analysis", "Malware Analysis"],
+    description: "Decompiling, binary analysis, and disassembling firmware, low-level heap layers, and shellcode.",
+    subskills: ["Ghidra", "IDA Pro", "x84-64 Assembly", "ELF & PE Analysis", "Shellcode Forge", "Heap Memory Audit"],
   },
   {
     name: "Frontend Development",
@@ -38,8 +38,8 @@ const SKILL_DATA: SkillCategory[] = [
     icon: Layers,
     color: "#00f0ff", // Tokyo Cyan
     glowClass: "shadow-neon-cyan",
-    description: "Designing sleek, modular user interfaces with high responsiveness and custom aesthetics.",
-    subskills: ["React.js", "Next.js", "Tailwind CSS", "TypeScript", "Canvas API"],
+    description: "Designing sleek, modular user interfaces with high responsiveness, custom aesthetics, and desktop containers.",
+    subskills: ["React", "Next.js", "Tailwind CSS", "TypeScript", "Three.js", "Electron Desktop"],
   },
   {
     name: "Backend & Systems",
@@ -47,8 +47,8 @@ const SKILL_DATA: SkillCategory[] = [
     icon: Database,
     color: "#8b5cf6", // Purple
     glowClass: "shadow-neon-purple",
-    description: "Creating highly scalable microservices, relational and non-relational database structures.",
-    subskills: ["Node.js / Express", "MongoDB", "PostgreSQL", "REST & GraphQL APIs", "Docker"],
+    description: "Creating highly scalable microservices, relational and non-relational database structures, and containerized deployment pipelines.",
+    subskills: ["FastAPI (Python)", "Node.js / Express", "MongoDB", "PostgreSQL", "Docker", "REST API Gateways"],
   },
   {
     name: "Network Security",
@@ -56,17 +56,17 @@ const SKILL_DATA: SkillCategory[] = [
     icon: ShieldCheck,
     color: "#10b981", // Green
     glowClass: "shadow-neon-green",
-    description: "Analyzing packet layers, implementing firewall rules, and IDS/IPS packet monitoring.",
-    subskills: ["Wireshark", "Suricata / Snort", "TCP/IP Suite", "VLAN/Subnetting", "VPNs"],
+    description: "Analyzing packet layers, implementing firewall rules, secure proxy setups, and packet monitoring.",
+    subskills: ["Wireshark", "Tor Network", "TCP/IP Suite", "Proxy Routing", "Kali Linux Auditing", "VMware Lab Setup"],
   },
   {
-    name: "Cryptography",
-    value: 80,
+    name: "AI & Automation",
+    value: 85,
     icon: Lock,
     color: "#a855f7", // Violet
     glowClass: "shadow-neon-purple",
-    description: "Implementing encryption standards, hash signatures, and validating token handshakes.",
-    subskills: ["AES/RSA", "HMAC / SHA-256", "OAuth 2.0 & JWT", "SSL/TLS Handshakes", "PKI"],
+    description: "Implementing local and cloud-based AI inference nodes, embeddings search, and secure RAG assistant pipelines.",
+    subskills: ["OpenAI API", "Ollama Inference", "Moondream2 Vision", "LangChain", "Vector Embeddings", "RAG Verbatims"],
   },
 ];
 

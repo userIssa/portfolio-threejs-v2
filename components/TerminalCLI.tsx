@@ -72,44 +72,47 @@ export default function TerminalCLI({ onHackTrigger }: { onHackTrigger: () => vo
       case "about":
         response = (
           <div className="flex flex-col gap-1 text-slate-300 leading-relaxed text-[10px]">
-            <p className="text-cyber-pink font-bold">NAME: Toluwanimi Oderinde (Issa)</p>
-            <p className="text-cyber-purple font-bold">ROLE: Software Engineer & Cyber Security Specialist</p>
-            <p>I am a detail-oriented backend/full-stack engineer and cyber security lead based in Nigeria. I specialize in auditing microservice gateways, designing React Native mobile portals, and conducting server penetration tests. I lead dev student communities and organize hacker CTFs.</p>
+            <p className="text-cyber-pink font-bold font-mono">NAME: Toluwanimi Oderinde (Issa)</p>
+            <p className="text-cyber-purple font-bold font-mono">ROLE: Software Engineer & Ethical Hacker</p>
+            <p className="font-sans">BSc Software Engineering graduate and cybersecurity specialist. Currently building internal tools, customer-facing platforms, and security-oriented systems at Genesis Group Nigeria's Innovations Department. Certified CEH & MCRTA.</p>
           </div>
         );
         break;
 
       case "skills":
         response = (
-          <div className="flex flex-col gap-1 text-slate-300 text-[10px]">
+          <div className="flex flex-col gap-1 text-slate-300 text-[10px] font-mono">
             <p className="text-cyber-pink font-bold">// TECH_STACK_MANIFEST // スキル一覧</p>
-            <p>• <span className="text-cyber-cyan">CYBER SECURITY:</span> Vulnerability assessment, OWASP Top 10 auditing, Reverse Eng (Ghidra), Wireshark</p>
-            <p>• <span className="text-cyber-green">LANGUAGES:</span> TypeScript, JavaScript, Python, C++, Go, HTML/CSS</p>
-            <p>• <span className="text-cyber-purple">FRAMEWORKS:</span> React.js, Next.js, Node.js, Express, React Native, Expo</p>
-            <p>• <span className="text-cyber-cyan">INFRA:</span> PostgreSQL, MongoDB, Docker, Git, REST & GraphQL APIs</p>
+            <p>• <span className="text-cyber-cyan">LANGUAGES:</span> Python, JavaScript, TypeScript, C, C99, SQL</p>
+            <p>• <span className="text-cyber-green">FRONTEND:</span> React, Next.js, Tailwind CSS, Three.js, Electron</p>
+            <p>• <span className="text-cyber-purple">BACKEND & DB:</span> FastAPI, Node.js, Express, MongoDB, PostgreSQL</p>
+            <p>• <span className="text-cyber-cyan">SECURITY & AI:</span> Metasploit, Burp Suite, Nmap, Wireshark, CEH, MCRTA, Ollama, OpenAI RAG</p>
           </div>
         );
         break;
 
       case "projects":
         response = (
-          <div className="flex flex-col gap-1 text-slate-300 text-[10px]">
+          <div className="flex flex-col gap-1 text-slate-300 text-[10px] font-mono">
             <p className="text-cyber-pink font-bold">// ARCHIVED PROJECTS LISTING // プロジェクトアーカイブ</p>
-            <p>1. <span className="text-cyber-cyan font-semibold">Food Ordering App</span> - Mobile React Native food tracing client using Google Maps.</p>
-            <p>2. <span className="text-cyber-cyan font-semibold">Vuln Scanner</span> - Multi-threaded python network scanner probing open ports and banner headers.</p>
-            <p>3. <span className="text-cyber-cyan font-semibold">Meme4U</span> - Interactive social meme creator using MongoDB APIs.</p>
-            <p>4. <span className="text-cyber-cyan font-semibold">AsiLeave Portal</span> - Administrative Next.js JWT task authorization client.</p>
-            <p>5. <span className="text-cyber-cyan font-semibold">StegoWeb</span> - Client-side Canvas LSB steganography tool hiding text in image pixels.</p>
+            <p>1. <span className="text-cyber-cyan font-semibold">SentinelWatch</span> - AI-powered local CCTV monitor with FastAPI/ntfy.sh alerts.</p>
+            <p>2. <span className="text-cyber-cyan font-semibold">Shroud</span> - Geo-aware secure browser with hybrid Tor proxy routing.</p>
+            <p>3. <span className="text-cyber-cyan font-semibold">ShellForge</span> - Constraint-aware shellcode generator with 51/51 validation passes.</p>
+            <p>4. <span className="text-cyber-cyan font-semibold">GenHears</span> - Enterprise complaint satisfaction management portal for Genesis Group.</p>
+            <p>5. <span className="text-cyber-cyan font-semibold">HeapSentinel</span> - Low-level heap memory overflow and double-free monitor in C.</p>
+            <p>6. <span className="text-cyber-cyan font-semibold">Arachne</span> - Custom web crawler and endpoint scanning framework.</p>
+            <p>7. <span className="text-cyber-cyan font-semibold">Ask HR</span> - JWT-secured RAG human resource assistant with vector embeddings.</p>
           </div>
         );
         break;
 
       case "experience":
         response = (
-          <div className="flex flex-col gap-1 text-slate-300 text-[10px]">
+          <div className="flex flex-col gap-1 text-slate-300 text-[10px] font-mono">
             <p className="text-cyber-pink font-bold">// HISTORIC EXPERIENCE LOG // 経歴</p>
-            <p>• <span className="text-cyber-cyan">Google Developer Student Clubs (GDSC Lead):</span> Organized academic security CTF hackathons and structured vulnerabilities workshops.</p>
-            <p>• <span className="text-cyber-green">Nigeria LNG Limited (Full Stack Intern):</span> Engineered company internal portals, optimized SQL queries, and secured route handshakes.</p>
+            <p>• <span className="text-cyber-pink font-bold">Genesis Group (Software Engineer Contract):</span> Built GenHears NPS tracker, scoped Inner Circle shopper app, and replacement portals.</p>
+            <p>• <span className="text-cyber-green font-bold">NLNG (Cybersecurity Intern):</span> Audited internal auth portals, tuned PostgreSQL schemas, and emulated local threat patterns.</p>
+            <p>• <span className="text-cyber-cyan font-bold">GDSC Babcock (Cyber Security Lead):</span> Designed active exploit tutorials and hosted security Capture-The-Flag challenges.</p>
           </div>
         );
         break;
@@ -121,6 +124,8 @@ export default function TerminalCLI({ onHackTrigger }: { onHackTrigger: () => vo
           </div>
         );
         
+        // @IP-LOGGING-BYPASS: Commented out to disable external IP tracking endpoint
+        /*
         fetch("/api/hack-alert", { method: "POST" })
           .then((res) => res.json())
           .then((data) => {
@@ -139,6 +144,7 @@ export default function TerminalCLI({ onHackTrigger }: { onHackTrigger: () => vo
             }
           })
           .catch((err) => console.error("Bypass log error:", err));
+        */
 
         setTimeout(() => {
           onHackTrigger();

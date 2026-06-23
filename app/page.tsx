@@ -13,9 +13,11 @@ import Contact from "@/components/Contact";
 import HackerLog from "@/components/HackerLog";
 import TerminalCLI from "@/components/TerminalCLI";
 import MatrixOverlay from "@/components/MatrixOverlay";
+import VideoPreloader from "@/components/VideoPreloader";
 
 export default function Home() {
   const [isHacking, setIsHacking] = useState(false);
+  const [showPreloader, setShowPreloader] = useState(true);
 
   useEffect(() => {
     // Force scroll restoration to manual and scroll to top on fresh mount/reload
@@ -100,6 +102,9 @@ export default function Home() {
 
       {/* Matrix Glitch Overlay when 'hack' is triggered */}
       {isHacking && <MatrixOverlay onComplete={() => setIsHacking(false)} />}
+
+      {/* Video Preloader on initial load */}
+      {showPreloader && <VideoPreloader onComplete={() => setShowPreloader(false)} />}
     </div>
   );
 }
