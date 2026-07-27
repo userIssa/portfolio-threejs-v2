@@ -29,7 +29,7 @@ const EXPERIENCE_DATA: WorkEvent[] = [
   },
   {
     role: "GDSC Cyber Security Lead",
-    company: "Babcock University Chapter",
+    company: "Google, Babcock University Chapter",
     period: "Sept 2023 - Aug 2024",
     icon: Award,
     color: "#d9b885", // Warm Gold
