@@ -51,7 +51,7 @@ const CAPABILITIES: CapabilityItem[] = [
 const DOSSIER_FACTS = [
   { label: "CURRENT ROLE", value: "Software Engineer @ Genesis Group" },
   { label: "CERTIFICATIONS", value: "CEH • MCRTA" },
-  { label: "EDUCATION", value: "BSc Software Eng • MSc Cyber (In Progress)" },
+  { label: "EDUCATION", value: "BSc Software Eng" },
   { label: "LOCATION", value: "Port Harcourt, NG" },
 ];
 
@@ -90,7 +90,7 @@ export default function About() {
                   I am a Software Engineering graduate working as a contract Software Engineer at Genesis Group Nigeria&apos;s Innovations Department in Port Harcourt. I ship internal operational tools, customer-facing platforms, and security-first architectures.
                 </p>
                 <p>
-                  Holding Certified Ethical Hacker (CEH) and Certified Red Team Analyst (MCRTA) credentials while pursuing an MSc in Cybersecurity, I care about software that solves concrete problems, holds up under load, and treats security as a core invariant rather than an afterthought.
+                  Holding Certified Ethical Hacker (CEH) and Certified Red Team Analyst (MCRTA) credentials, I care about software that solves concrete problems, holds up under load, and treats security as a core invariant rather than an afterthought.
                 </p>
               </div>
 
