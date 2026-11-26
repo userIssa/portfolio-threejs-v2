@@ -17,11 +17,37 @@ interface Particle {
   y: number;
   vx: number;
   vy: number;
-  radius: number;
+  size: number;
   alpha: number;
   color: string;
+  sakuraRgb: string;
   angle: number;
   spin: number;
+  swayPhase: number;
+  swaySpeed: number;
+  swayAmp: number;
+  flutter: number;
+  flutterSpeed: number;
+}
+
+const SAKURA_PALETTE = [
+  "244, 114, 182", // blossom pink
+  "251, 146, 178", // soft sakura rose
+  "225, 29, 72",   // deep accent sakura
+  "249, 168, 212", // pale petal blush
+  "236, 72, 153",  // vibrant sakura
+] as const;
+
+/** Draw a delicate notched cherry-blossom petal centered at (0, 0). */
+function drawSakuraPetal(ctx: CanvasRenderingContext2D, length: number, width: number) {
+  ctx.beginPath();
+  ctx.moveTo(0, -length * 0.55);
+  ctx.bezierCurveTo(width * 0.95, -length * 0.45, width, length * 0.15, width * 0.22, length * 0.55);
+  // Subtle signature sakura tip notch
+  ctx.lineTo(0, length * 0.38);
+  ctx.lineTo(-width * 0.22, length * 0.55);
+  ctx.bezierCurveTo(-width, length * 0.15, -width * 0.95, -length * 0.45, 0, -length * 0.55);
+  ctx.closePath();
 }
 
 export default function BackgroundCanvas() {
@@ -48,18 +74,24 @@ export default function BackgroundCanvas() {
 
     const initParticles = () => {
       particles = [];
-      const count = Math.min(Math.floor((canvas.width * canvas.height) / 36000), 42);
+      const count = Math.max(24, Math.min(Math.floor((canvas.width * canvas.height) / 19000), 68));
       for (let i = 0; i < count; i++) {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.25,
-          vy: Math.random() * 0.18 + 0.08,
-          radius: Math.random() * 1.8 + 0.9,
-          alpha: Math.random() * 0.25 + 0.08,
+          vx: (Math.random() - 0.35) * 0.35,
+          vy: Math.random() * 0.48 + 0.32,
+          size: Math.random() * 4.5 + 4.5, // ~4.5..9px sakura petal length
+          alpha: Math.random() * 0.34 + 0.44, // ~0.44..0.78 clearly visible on paper
           color: Math.random() > 0.6 ? "cyan" : "pink",
+          sakuraRgb: SAKURA_PALETTE[Math.floor(Math.random() * SAKURA_PALETTE.length)],
           angle: Math.random() * Math.PI * 2,
-          spin: (Math.random() - 0.5) * 0.01,
+          spin: (Math.random() - 0.5) * 0.018,
+          swayPhase: Math.random() * Math.PI * 2,
+          swaySpeed: Math.random() * 0.02 + 0.012,
+          swayAmp: Math.random() * 0.45 + 0.2,
+          flutter: Math.random() * Math.PI * 2,
+          flutterSpeed: Math.random() * 0.03 + 0.015,
         });
       }
     };
@@ -105,27 +137,66 @@ export default function BackgroundCanvas() {
         ctx.fillRect(pointerX - 220, pointerY - 220, 440, 440);
       }
 
-      for (const p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.swayPhase += p.swaySpeed;
+        p.flutter += p.flutterSpeed;
+
+        // Gentle breeze displacement near cursor
+        let breezeX = 0;
+        let breezeY = 0;
+        if (!dark && pointerX > 0 && pointerY > 0) {
+          const dx = p.x - pointerX;
+          const dy = p.y - pointerY;
+          const distSq = dx * dx + dy * dy;
+          if (distSq > 1 && distSq < 16900) {
+            const force = (1 - Math.sqrt(distSq) / 130) * 0.55;
+            const invDist = 1 / Math.sqrt(distSq);
+            breezeX = dx * invDist * force;
+            breezeY = dy * invDist * force * 0.4;
+          }
+        }
+
+        const speedScale = dark ? 0.45 : 1.0;
+        p.x += (p.vx + Math.sin(p.swayPhase) * p.swayAmp) * speedScale + breezeX;
+        p.y += p.vy * speedScale + breezeY;
         p.angle += p.spin;
 
-        if (p.x < -10) p.x = canvas.width + 10;
-        if (p.x > canvas.width + 10) p.x = -10;
-        if (p.y > canvas.height + 10) p.y = -10;
+        if (p.x < -16) p.x = canvas.width + 16;
+        if (p.x > canvas.width + 16) p.x = -16;
+        if (p.y > canvas.height + 16) {
+          p.y = -16;
+          p.x = Math.random() * canvas.width;
+        }
 
-        const rgb = p.color === "cyan"
-          ? dark ? "0, 229, 255" : "2, 132, 199"
-          : dark ? "255, 42, 109" : "225, 29, 72";
-
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.angle);
-        ctx.beginPath();
-        ctx.ellipse(0, 0, p.radius * 1.5, p.radius, 0, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${rgb}, ${dark ? p.alpha : p.alpha * 0.8})`;
-        ctx.fill();
-        ctx.restore();
+        if (dark) {
+          // Obsidian dark mode: keep ~60% subtle drifting motes
+          if (i % 5 === 0 || i % 5 === 3) continue;
+          const rgb = p.color === "cyan" ? "0, 229, 255" : "255, 42, 109";
+          const moteRadius = p.size * 0.28;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.angle);
+          ctx.beginPath();
+          ctx.ellipse(0, 0, moteRadius * 1.5, moteRadius, 0, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${rgb}, ${p.alpha * 0.38})`;
+          ctx.fill();
+          ctx.restore();
+        } else {
+          // Paper mode: prominent fluttering sakura petals
+          const tiltScale = 0.48 + 0.52 * Math.abs(Math.cos(p.flutter));
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.angle);
+          ctx.scale(1, tiltScale);
+          drawSakuraPetal(ctx, p.size, p.size * 0.62);
+          ctx.fillStyle = `rgba(${p.sakuraRgb}, ${p.alpha})`;
+          ctx.fill();
+          ctx.strokeStyle = `rgba(190, 24, 93, ${p.alpha * 0.25})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+          ctx.restore();
+        }
       }
 
       for (let idx = ripples.length - 1; idx >= 0; idx--) {
