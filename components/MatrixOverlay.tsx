@@ -7,13 +7,21 @@ export default function MatrixOverlay({ onComplete }: { onComplete: () => void }
   const [showStatus, setShowStatus] = useState(false);
 
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      const immediateStatus = setTimeout(() => setShowStatus(true), 0);
+      const quickComplete = setTimeout(() => onComplete(), 1800);
+      return () => {
+        clearTimeout(immediateStatus);
+        clearTimeout(quickComplete);
+      };
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-
-    let animId: number;
 
     const resize = () => {
       canvas.width = window.innerWidth;

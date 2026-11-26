@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Terminal, Shield, Menu, X } from "lucide-react";
+import { Terminal, Menu, X } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
-// Custom SVG path representing a loose hand-drawn double loop scribble
 function HoverScribble() {
   return (
     <svg
@@ -11,13 +11,15 @@ function HoverScribble() {
       viewBox="0 0 100 40"
       fill="none"
       preserveAspectRatio="none"
+      aria-hidden="true"
     >
       <path
         d="M 5 20 C 5 5, 95 5, 95 20 C 95 35, 5 35, 5 22 C 5 12, 85 8, 92 18 C 95 24, 75 32, 50 32"
-        stroke="#ff2a6d" // theme's cyber-pink
+        stroke="var(--accent-pink)"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
         strokeDasharray="300"
         strokeDashoffset="300"
         className="animate-[drawScribble_0.5s_ease-out_forwards]"
@@ -36,9 +38,8 @@ export default function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 30);
 
-      // Section tracking via IntersectionObserver
-      const sections = ["home", "about", "experience", "projects", "contact"];
-      const scrollPos = window.scrollY + 100;
+      const sections = ["home", "about", "experience", "projects", "decryptor", "credentials", "contact"];
+      const scrollPos = window.scrollY + 120;
 
       for (const section of sections) {
         const el = document.getElementById(section);
@@ -46,16 +47,39 @@ export default function Navbar() {
           const top = el.offsetTop;
           const height = el.offsetHeight;
           if (scrollPos >= top && scrollPos < top + height) {
-            setActiveSec(section);
+            if (section === "decryptor") {
+              setActiveSec("projects");
+            } else if (section === "credentials") {
+              setActiveSec("experience");
+            } else {
+              setActiveSec(section);
+            }
             break;
           }
         }
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMobileOpen(false);
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [mobileOpen]);
 
   const navItems = [
     { id: "home", label: "HOME // ホーム" },
@@ -80,74 +104,113 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 inset-x-0 z-30 transition-all duration-300 ${
-        scrolled ? "bg-cyber-dark/80 backdrop-blur-md border-b border-white/5 py-3" : "bg-transparent py-5"
+        scrolled
+          ? "bg-[var(--bg)]/85 backdrop-blur-md border-b border-[var(--line)] py-3"
+          : "bg-transparent py-5"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-        {/* Logo/Identity */}
+      <div className="max-w-6xl mx-auto px-6 flex items-center justify-between gap-4">
+        {/* Logo/Identity - Option 2: Editorial Terminal Wordmark */}
         <button
+          type="button"
           onClick={() => handleScrollTo("home")}
-          className="flex items-center gap-2.5 font-mono text-white text-base font-bold tracking-wider hover:opacity-90 group transition-all"
+          className="flex items-center gap-1.5 hover:opacity-95 group transition-all shrink-0 whitespace-nowrap"
+          aria-label="Issa.dev Home"
         >
-          <div className="p-1.5 rounded-lg border border-cyber-pink/35 bg-cyber-pink/10 text-cyber-pink group-hover:shadow-neon-pink transition-all">
-            <Shield size={16} className="animate-pulse" />
-          </div>
-          <span className="text-white group-hover:text-cyber-pink transition-colors">
-            ISSA<span className="text-cyber-pink">.DEV</span>
+          <span
+            aria-hidden="true"
+            className="font-mono font-bold text-sm text-cyber-pink group-hover:text-cyber-cyan transition-colors"
+          >
+            &gt;_
+          </span>
+
+          <span className="flex items-baseline leading-none">
+            <span className="font-sans font-black text-[18px] tracking-tight text-[var(--ink)]">
+              ISSA
+            </span>
+            <span className="font-mono font-bold text-[13px] tracking-normal text-cyber-pink">
+              .dev
+            </span>
+            <span
+              aria-hidden="true"
+              className="font-mono font-bold text-[13px] text-cyber-cyan animate-blink"
+            >
+              _
+            </span>
+          </span>
+
+          <span
+            aria-hidden="true"
+            className="text-[9px] font-mono text-[var(--muted)] tracking-widest ml-0.5 hidden sm:inline"
+          >
+            イッサ
           </span>
         </button>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-7">
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-5" aria-label="Primary navigation">
           {navItems.map((item) => (
             <button
               key={item.id}
+              type="button"
               onClick={() => handleScrollTo(item.id)}
               onMouseEnter={() => setHoveredItemId(item.id)}
               onMouseLeave={() => setHoveredItemId(null)}
-              className={`font-mono text-[10px] font-semibold tracking-widest relative py-2 transition-colors ${
-                activeSec === item.id ? "text-cyber-pink text-neon-glow-pink" : "text-white/60 hover:text-white"
+              className={`font-mono text-[10px] font-semibold tracking-wider whitespace-nowrap shrink-0 relative py-2 transition-colors ${
+                activeSec === item.id
+                  ? "text-cyber-pink text-neon-glow-pink"
+                  : "text-[var(--muted)] hover:text-[var(--ink)]"
               }`}
             >
-              <span className="relative z-10 px-2 py-1 inline-block">
+              <span className="relative z-10 px-1.5 py-1 inline-block">
                 {item.label}
                 {hoveredItemId === item.id && <HoverScribble />}
               </span>
               {activeSec === item.id && (
-                <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-cyber-pink animate-pulse rounded-full shadow-neon-pink" />
+                <span className="absolute bottom-0 left-1.5 right-1.5 h-0.5 bg-cyber-pink animate-pulse rounded-full shadow-neon-pink" />
               )}
             </button>
           ))}
 
           {/* Neo-Tokyo Online indicator */}
-          <div className="flex items-center gap-2 px-3 py-1.5 border border-cyber-pink/20 bg-cyber-pink/5 rounded-full text-[9px] font-mono text-cyber-pink tracking-wider">
+          <div className="flex items-center gap-2 px-2.5 py-1.5 border border-cyber-pink/25 bg-cyber-pink/5 rounded-full text-[9px] font-mono text-cyber-pink tracking-wider whitespace-nowrap shrink-0">
             <span className="w-1.5 h-1.5 rounded-full bg-cyber-pink animate-ping shrink-0" />
             <span>オンライン (ONLINE) // HIREABLE</span>
           </div>
+
+          <ThemeToggle />
         </nav>
 
-        {/* Mobile menu trigger */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="lg:hidden p-1.5 text-white/80 hover:text-white hover:bg-white/5 rounded transition-all"
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        {/* Mobile Controls */}
+        <div className="lg:hidden flex items-center gap-2.5">
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="p-1.5 text-[var(--ink)] hover:bg-[var(--surface-subtle)] rounded transition-all"
+            aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Drawer */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[60px] z-20 h-screen bg-[#08090f]/95 border-t border-white/5 flex flex-col p-6 animate-fade-in">
-          <nav className="flex flex-col gap-6 font-mono text-xs font-semibold tracking-widest text-left">
+        <div className="lg:hidden fixed inset-x-0 top-[60px] z-20 h-screen bg-[var(--bg)]/95 backdrop-blur-xl border-t border-[var(--line)] flex flex-col p-6 animate-fade-in">
+          <nav className="flex flex-col gap-6 font-mono text-xs font-semibold tracking-widest text-left" aria-label="Mobile navigation">
             {navItems.map((item) => (
               <button
                 key={item.id}
+                type="button"
                 onClick={() => handleScrollTo(item.id)}
                 onMouseEnter={() => setHoveredItemId(item.id)}
                 onMouseLeave={() => setHoveredItemId(null)}
-                className={`py-2 border-b border-white/5 transition-all text-left relative ${
-                  activeSec === item.id ? "text-cyber-pink pl-2" : "text-white/60 hover:text-white"
+                className={`py-2 border-b border-[var(--line)] transition-all text-left relative ${
+                  activeSec === item.id
+                    ? "text-cyber-pink pl-2"
+                    : "text-[var(--muted)] hover:text-[var(--ink)]"
                 }`}
               >
                 <span className="relative z-10 px-2 py-1 inline-block">

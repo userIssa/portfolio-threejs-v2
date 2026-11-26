@@ -18,31 +18,39 @@ const WORDS = [
   "SSL_BIND",
 ];
 
+const INITIAL_LOGS = [
+  "TOKYO_NETSEC // SUBNET FIREWALL BYPASS UTILITY V9.2",
+  "STATUS: LOCKED // ACCESS: CLASSIFIED_DOSSIER",
+  "IP_GATEWAY: 192.168.102.55",
+  "----------------------------------------------",
+  "SELECT HASHWORDS TO STABILIZE HANDSHAKE KEY:",
+];
+
+function pickRandomWord() {
+  return WORDS[Math.floor(Math.random() * WORDS.length)];
+}
+
 export default function DecryptionGame() {
-  const [targetWord, setTargetWord] = useState("");
+  const [targetWord, setTargetWord] = useState(WORDS[0]);
   const [attempts, setAttempts] = useState(4);
   const [selectedWord, setSelectedWord] = useState<string | null>(null);
-  const [logs, setLogs] = useState<string[]>([]);
+  const [logs, setLogs] = useState<string[]>(INITIAL_LOGS);
   const [gameState, setGameState] = useState<"playing" | "won" | "lost">("playing");
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const initGame = () => {
-    const randomWord = WORDS[Math.floor(Math.random() * WORDS.length)];
-    setTargetWord(randomWord);
+    setTargetWord(pickRandomWord());
     setAttempts(4);
     setSelectedWord(null);
     setGameState("playing");
-    setLogs([
-      "TOKYO_NETSEC // SUBNET FIREWALL BYPASS UTILITY V9.2",
-      "STATUS: LOCKED // ACCESS: CLASSIFIED_DOSSIER",
-      "IP_GATEWAY: 192.168.102.55",
-      "----------------------------------------------",
-      "SELECT HASHWORDS TO STABILIZE HANDSHAKE KEY:",
-    ]);
+    setLogs(INITIAL_LOGS);
   };
 
   useEffect(() => {
-    initGame();
+    const timer = setTimeout(() => {
+      setTargetWord(pickRandomWord());
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -89,7 +97,7 @@ export default function DecryptionGame() {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-5 rounded-2xl glassmorphism border-cyber-pink/20 font-mono select-none relative overflow-hidden">
+    <div className="w-full max-w-2xl mx-auto p-5 rounded-2xl bg-[#080b12]/95 text-slate-100 border border-[#ff2a6d]/30 shadow-2xl font-mono select-none relative overflow-hidden">
       {/* CRT scanlines and grid */}
       <div className="absolute inset-0 grid-overlay pointer-events-none opacity-10" />
       <div className="absolute inset-0 pointer-events-none terminal-scanlines opacity-10" />
@@ -100,7 +108,7 @@ export default function DecryptionGame() {
           <Terminal size={18} />
           <span>FIREWALL_BYPASS.EXE</span>
         </div>
-        <div className="flex items-center gap-2 font-mono text-[9px] text-white/40 uppercase">
+        <div className="flex items-center gap-2 font-mono text-[11px] text-white/60 uppercase">
           <span className={`w-2 h-2 rounded-full ${gameState === "won" ? "bg-cyber-cyan animate-pulse shadow-neon-cyan" : gameState === "lost" ? "bg-cyber-red animate-pulse shadow-neon-red" : "bg-cyber-pink animate-pulse shadow-neon-pink"}`} />
           <span>{gameState === "won" ? "BYPASS_OK" : gameState === "lost" ? "LOCKED" : `PENDING (${attempts} ATT)`}</span>
         </div>
@@ -110,7 +118,7 @@ export default function DecryptionGame() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Hex lists */}
         <div className="border border-cyber-pink/20 rounded-lg p-3 bg-black/40 h-64 overflow-y-auto terminal-scanlines text-xs text-cyber-pink/80 flex flex-col gap-2">
-          <div className="text-[10px] text-white/30 mb-2">// SUBNET DIRECTORY OVERLAY MAP</div>
+          <div className="text-[11px] text-white/45 mb-2">{"// SUBNET DIRECTORY OVERLAY MAP"}</div>
           <div className="grid grid-cols-2 gap-x-2 gap-y-1.5">
             {WORDS.map((word, idx) => {
               const hex = (0xa3c5 + idx * 322).toString(16).toUpperCase();
@@ -118,9 +126,10 @@ export default function DecryptionGame() {
               return (
                 <button
                   key={word}
+                  type="button"
                   disabled={gameState !== "playing"}
                   onClick={() => handleWordSelect(word)}
-                  className={`text-left font-mono text-[10px] p-1.5 rounded transition-all flex items-center gap-1.5 ${
+                  className={`text-left font-mono text-[11px] p-1.5 rounded transition-all flex items-center gap-1.5 ${
                     gameState !== "playing" 
                       ? "opacity-35 cursor-not-allowed" 
                       : isSelected 
@@ -170,6 +179,7 @@ export default function DecryptionGame() {
               </a>
             ) : gameState === "lost" ? (
               <button
+                type="button"
                 onClick={initGame}
                 className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-cyber-red/20 border border-cyber-red/50 text-cyber-red hover:bg-cyber-red hover:text-white transition-all rounded font-bold font-mono"
               >
@@ -178,6 +188,7 @@ export default function DecryptionGame() {
               </button>
             ) : (
               <button
+                type="button"
                 onClick={initGame}
                 className="w-full flex items-center justify-center gap-2 px-3 py-2 border border-cyber-pink/30 hover:border-cyber-pink text-cyber-pink/70 hover:text-white transition-all rounded font-bold font-mono text-[9px]"
               >

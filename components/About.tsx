@@ -1,164 +1,194 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { ShieldCheck, Database, Layers, Smartphone } from "lucide-react";
+import React, { useState } from "react";
+import { ShieldCheck, Database, Layers, Smartphone, ArrowUpRight, type LucideIcon } from "lucide-react";
 import SkillsRadar from "./SkillsRadar";
+import Reveal from "./Reveal";
 
-interface CardItem {
+interface CapabilityItem {
+  code: string;
   title: string;
-  icon: any;
-  color: string;
-  glowClass: string;
-  description: string;
+  icon: LucideIcon;
+  accent: string;
+  summary: string;
 }
 
-const CARDS_DATA: CardItem[] = [
+const CAPABILITIES: CapabilityItem[] = [
   {
-    title: "Software Engineer",
+    code: "01",
+    title: "Software Engineering",
     icon: Layers,
-    color: "#00f0ff", // Tokyo Cyan
-    glowClass: "group-hover:shadow-neon-cyan/40",
-    description: "Contractor at Genesis Group Nigeria. Building complaint systems (GenHears), shopper programs (Inner Circle), and assessment portals.",
+    accent: "var(--accent-cyan)",
+    summary:
+      "Contractor at Genesis Group Nigeria. Built complaint management systems (GenHears), secret shopper platforms (Inner Circle), and internal assessment portals.",
   },
   {
-    title: "GDSC Security Lead",
-    icon: Smartphone,
-    color: "#8b5cf6", // Purple
-    glowClass: "group-hover:shadow-neon-purple/40",
-    description: "Lead security representative for Google Developer Student Clubs. Directing CTFs, security tutorials, and ethical hacking workshops.",
+    code: "02",
+    title: "Ethical Hacking & Red Team",
+    icon: ShieldCheck,
+    accent: "var(--accent-pink)",
+    summary:
+      "CEH and MCRTA certified analyst. Auditing web endpoints, conducting server pentests, and testing low-level heap and shellcode boundaries.",
   },
   {
+    code: "03",
     title: "Backend & Systems",
     icon: Database,
-    color: "#10b981", // Green
-    glowClass: "group-hover:shadow-neon-green/40",
-    description: "Designing secure REST APIs, role-based access controls, MongoDB/PostgreSQL schemas, and OpenAI sentiment integrations.",
+    accent: "var(--accent-green)",
+    summary:
+      "Designing role-based REST APIs, tuned MongoDB and PostgreSQL schemas, Dockerized services, and OpenAI sentiment/RAG pipelines.",
   },
   {
-    title: "Ethical Hacker",
-    icon: ShieldCheck,
-    color: "#ff2a85", // Neon Sakura Pink
-    glowClass: "group-hover:shadow-neon-pink/40",
-    description: "CEH and MCRTA certified red team analyst. Auditing web endpoints, conducting server pentests, and testing low-level systems.",
+    code: "04",
+    title: "Security Leadership",
+    icon: Smartphone,
+    accent: "#8b5cf6",
+    summary:
+      "Former GDSC Cyber Security Lead at Babcock University. Directed hands-on CTFs, OWASP Top 10 workshops, and binary reverse-engineering tutorials.",
   },
 ];
 
-// Interactive 3D Parallax Tilt Card Component
-function TiltCard({ card }: { card: CardItem }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [rotate, setRotate] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = cardRef.current;
-    if (!card) return;
-
-    const rect = card.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    const rotateX = ((mouseY - height / 2) / (height / 2)) * -8;
-    const rotateY = ((mouseX - width / 2) / (width / 2)) * 8;
-
-    setRotate({ x: rotateX, y: rotateY });
-  };
-
-  const handleMouseLeave = () => {
-    setRotate({ x: 0, y: 0 });
-  };
-
-  return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
-        transition: "transform 0.15s cubic-bezier(0.25, 1, 0.5, 1)",
-      }}
-      className="group w-full p-6 glassmorphism rounded-2xl border-white/5 flex flex-col justify-between items-start cursor-pointer hover:border-white/20 select-none text-left relative overflow-hidden"
-    >
-      {/* Dynamic Hover Accent Bottom Border Highlight */}
-      <span
-        className="absolute bottom-0 left-0 w-full h-[3px] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"
-        style={{ backgroundColor: card.color }}
-      />
-
-      <div className="flex flex-col gap-4">
-        {/* Floating icon box */}
-        <div
-          className={`p-3 rounded-xl border border-white/5 bg-white/5 transition-all duration-300 ${card.glowClass} group-hover:scale-105`}
-          style={{ color: card.color }}
-        >
-          <card.icon size={24} />
-        </div>
-
-        <div>
-          <h3 className="text-lg font-bold tracking-wide text-white group-hover:text-white/95">
-            {card.title}
-          </h3>
-          <p className="text-xs text-slate-400 mt-2 leading-relaxed font-sans">
-            {card.description}
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
+const DOSSIER_FACTS = [
+  { label: "CURRENT ROLE", value: "Software Engineer @ Genesis Group" },
+  { label: "CERTIFICATIONS", value: "CEH • MCRTA" },
+  { label: "EDUCATION", value: "BSc Software Eng • MSc Cyber (In Progress)" },
+  { label: "LOCATION", value: "Port Harcourt, NG" },
+];
 
 export default function About() {
+  const [activeIdx, setActiveIdx] = useState(0);
+
   return (
-    <section id="about" className="py-20 px-6 relative select-none">
+    <section id="about" className="py-24 px-6 relative">
       <div className="absolute bottom-10 left-10 w-[400px] h-[400px] rounded-full bg-cyber-pink/5 blur-[120px] pointer-events-none -z-10" />
 
       <div className="max-w-6xl mx-auto w-full flex flex-col gap-14">
         {/* Section Heading */}
-        <div className="flex flex-col gap-3 text-left">
-          <div className="text-xs font-mono tracking-widest text-cyber-pink font-bold">
-            01 // OVERVIEW_AND_DOSSIER // 概要
+        <Reveal>
+          <div className="flex flex-col gap-3 text-left">
+            <div className="text-xs font-mono tracking-widest text-cyber-pink font-bold">
+              {"01 // OVERVIEW_AND_DOSSIER // 概要"}
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--ink)] font-sans tracking-tight">
+              Professional Overview
+            </h2>
+            <div className="h-1 w-20 bg-gradient-to-r from-cyber-pink to-cyber-cyan rounded-full mt-1" />
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-sans tracking-tight">
-            Professional Overview
-          </h2>
-          <div className="h-1 w-20 bg-gradient-to-r from-cyber-pink to-cyber-cyan rounded-full mt-1" />
-        </div>
+        </Reveal>
 
-        {/* Bio paragraph and grid of services */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-          <div className="text-left flex flex-col gap-4 text-slate-300 text-sm leading-relaxed font-sans max-w-xl">
-            <p>
-              I am a Software Engineering graduate currently working as a Software Engineer (contract) at Genesis Group Nigeria's Innovations Department in Port Harcourt. I build secure internal tools, customer-facing platforms, and security-oriented systems — then write about the ones that matter.
-            </p>
-            <p>
-              I hold Certified Ethical Hacker (CEH) and Certified Red Team Analyst (MCRTA) certifications and am actively pursuing an MSc in Cybersecurity. I care about tools that solve real problems, code that holds up under pressure, and security that doesn't get bolted on as an afterthought.
-            </p>
-            <p className="font-mono text-xs text-cyber-pink">
-              // ACTIVE CORE PROTOCOLS: next.js | node.js | python | c99 | mongodb | postgresql | metasploit | ceh | mcrta
-            </p>
+        {/* Asymmetric Editorial Lead + Interactive Capability Ledger */}
+        <Reveal delayMs={80}>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+            {/* Editorial Bio Column */}
+            <div className="lg:col-span-7 text-left flex flex-col gap-6">
+              <p className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-[1.2] text-[var(--ink)] font-sans">
+                I build production systems—and test how they break before anyone else can.
+              </p>
+
+              <div className="flex flex-col gap-4 text-[var(--text)] text-[15px] leading-relaxed font-sans max-w-2xl">
+                <p>
+                  I am a Software Engineering graduate working as a contract Software Engineer at Genesis Group Nigeria&apos;s Innovations Department in Port Harcourt. I ship internal operational tools, customer-facing platforms, and security-first architectures.
+                </p>
+                <p>
+                  Holding Certified Ethical Hacker (CEH) and Certified Red Team Analyst (MCRTA) credentials while pursuing an MSc in Cybersecurity, I care about software that solves concrete problems, holds up under load, and treats security as a core invariant rather than an afterthought.
+                </p>
+              </div>
+
+              <div className="font-mono text-xs text-cyber-pink pt-1">
+                {"// CORE_STACK: next.js | typescript | python | c99 | mongodb | postgresql | metasploit | ceh | mcrta"}
+              </div>
+            </div>
+
+            {/* Interactive 1px Hairline Capability Ledger */}
+            <div className="lg:col-span-5 border-t border-[var(--line)] flex flex-col text-left">
+              {CAPABILITIES.map((cap, idx) => {
+                const isActive = activeIdx === idx;
+                return (
+                  <button
+                    key={cap.code}
+                    type="button"
+                    onClick={() => setActiveIdx(idx)}
+                    onMouseEnter={() => setActiveIdx(idx)}
+                    className={`w-full text-left py-4 px-3 border-b border-[var(--line)] transition-all flex flex-col gap-2 ${
+                      isActive ? "bg-[var(--surface-subtle)]" : "hover:bg-[var(--surface-subtle)]/60"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-3 w-full">
+                      <div className="flex items-center gap-3">
+                        <span
+                          className="font-mono text-xs font-bold"
+                          style={{ color: isActive ? cap.accent : "var(--muted)" }}
+                        >
+                          {cap.code}
+                        </span>
+                        <cap.icon
+                          size={16}
+                          style={{ color: isActive ? cap.accent : "var(--muted)" }}
+                        />
+                        <span
+                          className={`text-sm sm:text-base font-bold tracking-wide transition-colors ${
+                            isActive ? "text-[var(--ink)]" : "text-[var(--text)]"
+                          }`}
+                        >
+                          {cap.title}
+                        </span>
+                      </div>
+
+                      <ArrowUpRight
+                        size={15}
+                        className={`transition-transform duration-300 shrink-0 ${
+                          isActive ? "rotate-45 text-cyber-pink" : "text-[var(--muted)]"
+                        }`}
+                      />
+                    </div>
+
+                    <div
+                      className={`grid transition-all duration-300 ${
+                        isActive ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                      }`}
+                    >
+                      <p className="overflow-hidden text-[13px] text-[var(--muted)] leading-relaxed font-sans pl-7">
+                        {cap.summary}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
+        </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {CARDS_DATA.map((card, idx) => (
-              <TiltCard key={idx} card={card} />
+        {/* Architectural 1px Hairline Dossier Strip */}
+        <Reveal delayMs={120}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-y border-[var(--line)] divide-y sm:divide-y-0 sm:divide-x divide-[var(--line)] text-left">
+            {DOSSIER_FACTS.map((fact) => (
+              <div key={fact.label} className="py-5 sm:px-5 first:sm:pl-0 last:sm:pr-0 flex flex-col gap-1.5">
+                <span className="font-mono text-[10px] tracking-widest text-[var(--muted)]">
+                  {fact.label}
+                </span>
+                <span className="font-sans text-sm font-bold text-[var(--ink)]">
+                  {fact.value}
+                </span>
+              </div>
             ))}
           </div>
-        </div>
+        </Reveal>
 
-        {/* Re-embed interactive Skills Radar */}
-        <div className="flex flex-col gap-6 mt-6">
-          <div className="flex flex-col gap-2 text-left">
-            <h3 className="text-xl font-bold text-white font-sans">
-              Cybersecurity & Dev Skill Vectors // スキル
-            </h3>
-            <p className="text-xs text-slate-400">
-              Hover over axis markers to display specialized sub-skills and proficiency metrics.
-            </p>
+        {/* Interactive Skills Radar */}
+        <Reveal delayMs={160}>
+          <div className="flex flex-col gap-6 pt-2">
+            <div className="flex flex-col gap-2 text-left">
+              <h3 className="text-xl font-bold text-[var(--ink)] font-sans">
+                {"Cybersecurity & Dev Skill Vectors // スキル"}
+              </h3>
+              <p className="text-sm text-[var(--muted)]">
+                Hover over or select axis markers to display specialized sub-skills and proficiency metrics.
+              </p>
+            </div>
+
+            <SkillsRadar />
           </div>
-
-          <SkillsRadar />
-        </div>
+        </Reveal>
       </div>
     </section>
   );

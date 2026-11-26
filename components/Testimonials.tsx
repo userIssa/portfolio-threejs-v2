@@ -1,159 +1,146 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { MessageSquareCode, Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { ShieldCheck, Award, Terminal, Cpu, CheckCircle2, ArrowUpRight } from "lucide-react";
+import Reveal from "./Reveal";
 
-interface TestimonialItem {
-  quote: string;
-  name: string;
-  role: string;
-  company: string;
-  avatarLetter: string;
+interface LedgerEntry {
+  code: string;
+  category: string;
+  title: string;
+  organization: string;
+  metric: string;
+  detail: string;
+  accent: string;
+  icon: typeof ShieldCheck;
 }
 
-const TESTIMONIALS_DATA: TestimonialItem[] = [
+const VERIFIED_LEDGER: LedgerEntry[] = [
   {
-    quote: "Issa demonstrated exceptional security insight during our system auditing phases. He analyzed complex endpoints, resolved security loops, and delivered highly descriptive vulnerability matrices.",
-    name: "Dr. Sarah Jenkins",
-    role: "Faculty Sponsor / Cyber Security Analyst",
-    company: "GDSC Academic Advisory Board",
-    avatarLetter: "S",
+    code: "CERT_01",
+    category: "OFFENSIVE SECURITY",
+    title: "Certified Ethical Hacker (CEH)",
+    organization: "EC-Council",
+    metric: "ACTIVE CREDENTIAL",
+    detail: "Validated methodology across web application exploitation, network scanning, privilege escalation, and vulnerability reporting.",
+    accent: "var(--accent-pink)",
+    icon: ShieldCheck,
   },
   {
-    quote: "During his internship, Issa integrated perfectly into our developer team. He designed key portal modules, optimized database layers, and secured sensitive APIs with OAuth/JWT standards.",
-    name: "Oluwaseun Alabi",
-    role: "Senior Full-Stack Developer",
-    company: "Nigeria LNG Limited (NLNG)",
-    avatarLetter: "O",
+    code: "CERT_02",
+    category: "RED TEAM OPERATIONS",
+    title: "Certified Red Team Analyst (MCRTA)",
+    organization: "CyberWarFare Labs",
+    metric: "ACTIVE CREDENTIAL",
+    detail: "Hands-on adversary emulation covering active directory attack paths, lateral movement, and defensive detection evasion.",
+    accent: "var(--accent-cyan)",
+    icon: Award,
   },
   {
-    quote: "An incredibly proactive engineer who combines frontend design aesthetics with backend rigor. His work on the leave-approval platform exceeded our expectations for responsiveness and code quality.",
-    name: "Marcus Cheng",
-    role: "Technical Lead",
-    company: "AsiLeave Projects Director",
-    avatarLetter: "M",
+    code: "AUDIT_03",
+    category: "PRODUCTION IMPACT",
+    title: "Database Optimization & Auth Hardening",
+    organization: "Nigeria LNG Limited (NLNG)",
+    metric: "-35% QUERY LAG",
+    detail: "Audited portal authentication flows with JWT/Express endpoint hardening and tuned PostgreSQL schemas to cut dashboard load times by 35%.",
+    accent: "var(--accent-green)",
+    icon: Cpu,
+  },
+  {
+    code: "BUILD_04",
+    category: "SYSTEMS VALIDATION",
+    title: "Multi-Arch Shellcode Verification",
+    organization: "ShellForge Research",
+    metric: "51 / 51 TESTS PASSING",
+    detail: "Automated constraint-aware payload validation across x86-64, x86-32, ARM Thumb, and MIPS Big-Endian targets.",
+    accent: "#8b5cf6",
+    icon: Terminal,
   },
 ];
 
 export default function Testimonials() {
-  const [activeIdx, setActiveIdx] = useState(0);
-  const [animating, setAnimating] = useState(false);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      handleNext();
-    }, 8000);
-
-    return () => clearInterval(timer);
-  }, [activeIdx]);
-
-  const handleNext = () => {
-    if (animating) return;
-    setAnimating(true);
-    setTimeout(() => {
-      setActiveIdx((prev) => (prev + 1) % TESTIMONIALS_DATA.length);
-      setAnimating(false);
-    }, 300);
-  };
-
-  const handlePrev = () => {
-    if (animating) return;
-    setAnimating(true);
-    setTimeout(() => {
-      setActiveIdx((prev) => (prev - 1 + TESTIMONIALS_DATA.length) % TESTIMONIALS_DATA.length);
-      setAnimating(false);
-    }, 300);
-  };
-
-  const active = TESTIMONIALS_DATA[activeIdx];
-
   return (
-    <section className="py-20 px-6 relative select-none">
+    <section id="credentials" className="py-20 px-6 relative">
       <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-cyber-purple/5 blur-[120px] pointer-events-none -z-10" />
 
-      <div className="max-w-4xl mx-auto w-full flex flex-col gap-10">
-        {/* Section Heading */}
-        <div className="flex flex-col gap-3 text-left">
-          <div className="text-xs font-mono tracking-widest text-cyber-green font-bold">
-            05 // PEER_FEEDBACK_MANIFEST
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-sans tracking-tight">
-            Recommendations
-          </h2>
-          <div className="h-1 w-20 bg-gradient-to-r from-cyber-purple to-cyber-cyan rounded-full mt-1" />
-        </div>
-
-        {/* Carousel container */}
-        <div className="relative glassmorphism rounded-3xl p-6 sm:p-10 border-white/5 flex flex-col items-center justify-center text-center overflow-hidden">
-          {/* Quote watermarks */}
-          <Quote className="absolute top-6 left-6 text-white/5 w-24 h-24 rotate-180 pointer-events-none" />
-          <MessageSquareCode className="absolute bottom-6 right-6 text-white/5 w-20 h-20 pointer-events-none" />
-
-          {/* Active quote slide */}
-          <div className={`transition-all duration-300 ${animating ? "opacity-0 scale-95" : "opacity-100 scale-100"} flex flex-col items-center gap-6 z-10 max-w-2xl`}>
-            <p className="text-base sm:text-lg text-slate-200 italic leading-relaxed font-sans">
-              "{active.quote}"
-            </p>
-
-            {/* Author specs */}
-            <div className="flex items-center gap-3.5 mt-2">
-              <div className="w-12 h-12 rounded-full bg-cyber-purple/15 border border-cyber-purple/40 text-cyber-purple flex items-center justify-center font-bold text-lg font-mono tracking-wider shrink-0 shadow-neon-purple/20">
-                {active.avatarLetter}
+      <div className="max-w-6xl mx-auto w-full flex flex-col gap-12">
+        <Reveal>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 text-left">
+            <div className="flex flex-col gap-3">
+              <div className="text-xs font-mono tracking-widest text-cyber-green font-bold">
+                {"05 // VERIFIED_CREDENTIALS_AND_IMPACT // 実績"}
               </div>
-              <div className="text-left font-mono">
-                <div className="text-sm font-bold text-white tracking-wide">{active.name}</div>
-                <div className="text-xs text-cyber-green/80 font-medium mt-0.5">
-                  {active.role}
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--ink)] font-sans tracking-tight">
+                Certifications &amp; Proven Impact
+              </h2>
+              <div className="h-1 w-20 bg-gradient-to-r from-cyber-purple to-cyber-cyan rounded-full mt-1" />
+            </div>
+
+            <a
+              href="/assets/resume.pdf"
+              download="Toluwanimi_Oderinde_Resume.pdf"
+              className="cta-wipe self-start md:self-auto inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-[var(--line-strong)] bg-[var(--surface)] text-[var(--ink)] font-mono text-xs font-bold tracking-wider"
+            >
+              <span>FULL DOSSIER (PDF)</span>
+              <ArrowUpRight size={14} />
+            </a>
+          </div>
+        </Reveal>
+
+        {/* Architectural 1px Hairline Verification Ledger */}
+        <Reveal delayMs={90}>
+          <div className="border-t border-[var(--line)] flex flex-col text-left">
+            {VERIFIED_LEDGER.map((item) => (
+              <div
+                key={item.code}
+                className="group grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 py-6 px-3 border-b border-[var(--line)] hover:bg-[var(--surface-subtle)] transition-colors items-start lg:items-center"
+              >
+                <div className="lg:col-span-3 flex items-center gap-3">
+                  <div
+                    className="p-2 rounded-lg border shrink-0"
+                    style={{
+                      borderColor: `${item.accent}40`,
+                      backgroundColor: `${item.accent}14`,
+                      color: item.accent,
+                    }}
+                  >
+                    <item.icon size={16} />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-mono text-[10px] tracking-widest text-[var(--muted)]">
+                      {item.code} {"//"} {item.category}
+                    </span>
+                    <span className="font-mono text-xs font-bold text-[var(--ink)] mt-0.5">
+                      {item.organization}
+                    </span>
+                  </div>
                 </div>
-                <div className="text-[10px] text-white/40 font-semibold">{active.company}</div>
+
+                <div className="lg:col-span-6 flex flex-col gap-1">
+                  <h3 className="text-base sm:text-lg font-bold text-[var(--ink)] tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-[var(--text)] font-sans leading-relaxed">
+                    {item.detail}
+                  </p>
+                </div>
+
+                <div className="lg:col-span-3 flex lg:justify-end">
+                  <span
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border font-mono text-[11px] font-bold tracking-wider"
+                    style={{
+                      borderColor: `${item.accent}45`,
+                      backgroundColor: `${item.accent}12`,
+                      color: item.accent,
+                    }}
+                  >
+                    <CheckCircle2 size={12} />
+                    <span>{item.metric}</span>
+                  </span>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-
-          {/* Controls */}
-          <div className="flex items-center justify-between w-full mt-8 pt-6 border-t border-white/5 z-10">
-            {/* Nav dots */}
-            <div className="flex gap-2">
-              {TESTIMONIALS_DATA.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => {
-                    if (animating) return;
-                    setAnimating(true);
-                    setTimeout(() => {
-                      setActiveIdx(idx);
-                      setAnimating(false);
-                    }, 300);
-                  }}
-                  className={`w-2.5 h-2.5 rounded-full transition-all ${
-                    activeIdx === idx
-                      ? "bg-cyber-cyan w-6 shadow-neon-cyan"
-                      : "bg-white/10 hover:bg-white/30"
-                  }`}
-                  aria-label={`Go to testimonial ${idx + 1}`}
-                />
-              ))}
-            </div>
-
-            {/* Buttons */}
-            <div className="flex gap-2">
-              <button
-                onClick={handlePrev}
-                className="p-2 border border-white/5 hover:border-white/25 hover:bg-white/5 rounded-full text-slate-400 hover:text-white transition-all"
-                aria-label="Previous recommendation"
-              >
-                <ChevronLeft size={16} />
-              </button>
-              <button
-                onClick={handleNext}
-                className="p-2 border border-white/5 hover:border-white/25 hover:bg-white/5 rounded-full text-slate-400 hover:text-white transition-all"
-                aria-label="Next recommendation"
-              >
-                <ChevronRight size={16} />
-              </button>
-            </div>
-          </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
